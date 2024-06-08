@@ -80,10 +80,13 @@ public class Laser : Bullet
         bulletYPosition = y;
         startPos = new Vector3(bulletXPosition, bulletYPosition, 0f);
         ((LineRenderer)bulletSpriteRenderer).SetPosition(0, startPos);
-        var (endX, endY) =  MoveToNewPosition(startPos, speed, directionAngle);
-        endPos.x = endX;
-        endPos.y = endY;
+        // var (endX, endY) =  MoveToNewPosition(startPos, speed, directionAngle);
+        // endPos.x = endX;
+        // endPos.y = endY;
+        endPos.x = startPos.x + Mathf.Cos(directionAngle) * speed ;
+        endPos.y = startPos.y + Mathf.Sin(directionAngle) * speed;
         ((LineRenderer)bulletSpriteRenderer).SetPosition(1, endPos);
+
     }
     
     public void SetEnable(bool b)
@@ -99,6 +102,6 @@ public class Laser : Bullet
 
     void Update()
     {
-        
+        // Debug.DrawRay(startPos, 100 * directionAngle * Vector3.one, Color.red );
     }
 }
