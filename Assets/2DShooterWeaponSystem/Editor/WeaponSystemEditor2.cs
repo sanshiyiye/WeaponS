@@ -243,18 +243,18 @@ public class WeaponSystemEditor2 : Editor {
 
         #region Weapon positioning related
 
-        var gunPointTooltip = new GUIContent("Gun Point", "Specify a GunPoint transform that bullets will be fired from. This is not saved with weapon configs, and is set directly on the WeaponSystem.");
+        // var gunPointTooltip = new GUIContent("Gun Point", "Specify a GunPoint transform that bullets will be fired from. This is not saved with weapon configs, and is set directly on the WeaponSystem.");
         var relativeToObjectTooltip = new GUIContent("Weapon relative to Object", "The aiming/facing direction is calculated relative to the transform that the WeaponSystem component is placed on. Offset X and Y positioning of bullets is taken into account and applied in this mode.");
         var relativeToGunPointTooltip = new GUIContent("Weapon relative to GunPoint", "The aiming/facing direction is calculated relative to the GunPoint transform for the currently selected WeaponConfiguration that the WeaponSystem component is using. Offset X and Y positioning of bullets is NOT taken into account.");
 
-        var gunPointProp = serializedObject.FindProperty("gunPoint");
+        // var gunPointProp = serializedObject.FindProperty("gunPoint");
         // var weaponRelativeToComponentProp = serializedObject.FindProperty("weaponRelativeToComponent");
         
         showPositioningParams = EditorGUILayout.Foldout(showPositioningParams, "Weapon positioning settings");
         if (showPositioningParams)
 	    {
 	        EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(gunPointProp, gunPointTooltip);
+            // EditorGUILayout.PropertyField(gunPointProp, gunPointTooltip);
 
             // bool relativeToggleState = weaponRelativeToComponentProp.boolValue == false;
             // relativeToggleState = GUILayout.Toggle(relativeToggleState, relativeToObjectTooltip, (GUIStyle)"Radio");

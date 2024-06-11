@@ -34,16 +34,25 @@ public class Bullet : MonoBehaviour {
     /// The direction bullet is travelling in radians.
     /// </summary>
     public float directionAngle;
+    
+    
+    public virtual float AimAngle{
+        get
+        {
 
-    public virtual float DirectionAngle {
-        get{
-            return directionAngle;
+            return directionAngle - bulletSpreadAngle;
         }
-        set{
-            directionAngle = value;
+        set
+        {
+            directionAngle = value + bulletSpreadAngle;
         }
     }
+    /// <summary>
+    /// 子弹散射时候的角度，同时发出的子弹会有一定角度偏移
+    /// </summary>
+    public float bulletSpreadAngle;
 
+    
     /// <summary>
     /// The direction bullet is travelling in degrees.
     /// </summary>
@@ -126,14 +135,24 @@ public class Bullet : MonoBehaviour {
     private float frequency = 0f;
 
     public bool circularFireMode;
+
+    public GunPoint gunPoint;
+
+    protected bool isAlive;
     
     // Use this for initialization
-    void Start()
-    {
+    // protected virtual void Start()
+    // {
         // Cache the sprite renderer on start when bullets are initially created and pooled for better performance
-        bulletSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-    }
+        // bulletSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+    // }
 
+    public virtual void Init()
+    {
+        bulletSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        isAlive = true;
+    }
+    
     private void OnDisable()
     {
         sineX = 0f;
@@ -228,7 +247,10 @@ public class Bullet : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
+        if (!isAlive)
+        {
+            return;
+        }
         directionDegrees = directionAngle * Mathf.Rad2Deg;
         if (gameObject != null)
         {

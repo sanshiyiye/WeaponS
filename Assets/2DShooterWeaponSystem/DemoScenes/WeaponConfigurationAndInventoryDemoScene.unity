@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 65237709}
   m_Layer: 0
   m_Name: underneath-section
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1792,7 +1792,7 @@ GameObject:
   - component: {fileID: 164961481}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2037,7 +2037,7 @@ GameObject:
   - component: {fileID: 175421943}
   m_Layer: 14
   m_Name: Barrel01
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2796,6 +2796,8 @@ GameObject:
   - component: {fileID: 211669042}
   - component: {fileID: 211669044}
   - component: {fileID: 211669045}
+  - component: {fileID: 211669047}
+  - component: {fileID: 211669046}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -2909,7 +2911,6 @@ MonoBehaviour:
   hitEffectEnabled: 0
   aimAngle: 0
   shotFiredClip: {fileID: 0}
-  gunPoint: {fileID: 920900431}
   isShooting: 0
   bulletOptionType: 0
   shooterDirectionType: 0
@@ -2950,6 +2951,43 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &211669046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211669041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dfd51839ac46d142b8db3e9ac7387b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovementType: 1
+  FlashLight: {fileID: 0}
+  IsMoving: 0
+  freeAimMovementSpeed: 2
+--- !u!50 &211669047
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211669041}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &218640815
 GameObject:
   m_ObjectHideFlags: 0
@@ -4411,7 +4449,7 @@ GameObject:
   - component: {fileID: 324588818}
   m_Layer: 14
   m_Name: Barrel01
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4909,7 +4947,7 @@ GameObject:
   - component: {fileID: 378559133}
   m_Layer: 0
   m_Name: WallHoriz01 (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6138,7 +6176,7 @@ GameObject:
   - component: {fileID: 457775808}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7129,7 +7167,7 @@ GameObject:
   - component: {fileID: 497501263}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7531,7 +7569,7 @@ GameObject:
   - component: {fileID: 524526148}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7886,7 +7924,7 @@ GameObject:
   - component: {fileID: 560480382}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8017,7 +8055,7 @@ GameObject:
   - component: {fileID: 562111686}
   m_Layer: 0
   m_Name: TrainingDummy
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9241,7 +9279,7 @@ GameObject:
   - component: {fileID: 672540187}
   m_Layer: 14
   m_Name: Barrel01
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9932,7 +9970,7 @@ GameObject:
   - component: {fileID: 733897362}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11901,7 +11939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 920900431}
   m_Layer: 9
-  m_Name: GunPoint2
+  m_Name: GunPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12906,6 +12944,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 659357526}
     m_Modifications:
+    - target: {fileID: 100000, guid: 1cde7502c5400ce4e8751d782c74f159, type: 3}
+      propertyPath: m_TagString
+      value: Obj
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 1cde7502c5400ce4e8751d782c74f159, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -13577,7 +13619,7 @@ GameObject:
   - component: {fileID: 1075227009}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16461,7 +16503,7 @@ GameObject:
   - component: {fileID: 1302816107}
   m_Layer: 14
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17697,6 +17739,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 659357526}
     m_Modifications:
+    - target: {fileID: 100000, guid: 1cde7502c5400ce4e8751d782c74f159, type: 3}
+      propertyPath: m_TagString
+      value: Obj
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 1cde7502c5400ce4e8751d782c74f159, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -21058,7 +21104,7 @@ GameObject:
   - component: {fileID: 1681493552}
   m_Layer: 14
   m_Name: Barrel01
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22223,7 +22269,7 @@ GameObject:
   - component: {fileID: 1716455021}
   m_Layer: 14
   m_Name: Barrel01
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24465,7 +24511,7 @@ GameObject:
   - component: {fileID: 1940413150}
   m_Layer: 14
   m_Name: Barrel01
-  m_TagString: Untagged
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25307,7 +25353,7 @@ GameObject:
   - component: {fileID: 2009735661}
   m_Layer: 0
   m_Name: WallHoriz01 (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26603,6 +26649,7 @@ MonoBehaviour:
   amplitude: 0
   bulletSpriteRenderer: {fileID: 0}
   directionAngle: 0
+  bulletSpreadAngle: 0
   directionDegrees: 0
   newDirection: {x: 0, y: 0, z: 0}
   bulletXPosition: 0

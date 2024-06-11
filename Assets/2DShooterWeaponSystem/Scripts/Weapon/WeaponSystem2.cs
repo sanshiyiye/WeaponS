@@ -208,7 +208,7 @@ public class WeaponSystem2 : MonoBehaviour
     /// <summary>
     /// The gun point or transform location that bullets are shot / generated from when shooting. This is used if the WeaponSystem configuration is set to relative to gun point mode.
     /// </summary>
-    public Transform gunPoint;
+    public GunPoint gunPoint;
 
     /// <summary>
     /// Boolean value to toggle shooting
@@ -274,7 +274,7 @@ public class WeaponSystem2 : MonoBehaviour
             pingPongSpread = false;
             weaponXOffset = 0.74f;
             weaponYOffset = 0f;
-            gunPoint.transform.localPosition = new Vector2(0.6f, 0f);
+            gunPoint.point.localPosition = new Vector2(0.6f, 0f);
 
             // Set the property and fire off the event if subscribed to.
             _bulletPreset = value;
@@ -361,6 +361,9 @@ public class WeaponSystem2 : MonoBehaviour
         }
         
         transform.eulerAngles = new Vector3(0.0f, 0.0f, 2 * Mathf.Rad2Deg);
+
+        Transform gunPointTransform = transform.Find("GunPoint");
+        gunPoint = new GunPoint(gunPointTransform, 0);
     }
 
     // Use this for initialization
@@ -456,7 +459,7 @@ public class WeaponSystem2 : MonoBehaviour
     /// <param name="weaponConfigIndex">The weapon configuration 'slot' index to equip.</param>
     void WeaponSystemWeaponConfigurationChanged(Transform gunPointTransform, int weaponConfigIndex)
     {
-        gunPoint.transform.position = gunPointTransform.position;
+        gunPoint.point.position = gunPointTransform.position;
     }
     
 
@@ -483,6 +486,7 @@ public class WeaponSystem2 : MonoBehaviour
         bulletAmplitude = config.BulletAmplitude;
         // circle
         bulletCircleRadius = config.BulletCircleRadius;
+        
         
         bulletFrequencyIncrement = config.BulletFrequencyIncrement;
         bulletSpread = config.BulletSpread;
@@ -522,7 +526,7 @@ public class WeaponSystem2 : MonoBehaviour
         //     isFirstEquip = false;
         // }
 
-        if (WeaponConfigurationChanged != null) WeaponConfigurationChanged(gunPoint, slot);
+        if (WeaponConfigurationChanged != null) WeaponConfigurationChanged(gunPoint.point, slot);
     }
     
 
@@ -712,7 +716,8 @@ public class WeaponSystem2 : MonoBehaviour
 
             var bullet = GetBulletFromPool();
             var bulletComponent = (Bullet)bullet.GetComponent(typeof(Bullet));
-
+            bulletComponent.Init();
+            
             var offsetX = Mathf.Cos(aimAngle - Mathf.PI / 2) * (bulletSpacingInitial - i * bulletSpacingIncrement);
             var offsetY = Mathf.Sin(aimAngle - Mathf.PI / 2) * (bulletSpacingInitial - i * bulletSpacingIncrement);
 
@@ -722,7 +727,8 @@ public class WeaponSystem2 : MonoBehaviour
             // }
             // else
             // {
-                bulletComponent.DirectionAngle = aimAngle + bulletSpreadInitial + i * bulletSpreadIncrement;
+                bulletComponent.bulletSpreadAngle = bulletSpreadInitial + i * bulletSpreadIncrement;
+                bulletComponent.AimAngle = aimAngle ;
             // }
 
             bulletComponent.speed = bulletSpeed;
@@ -730,15 +736,15 @@ public class WeaponSystem2 : MonoBehaviour
             bulletComponent.amplitude = bulletAmplitude;
             bulletComponent.frequencyIncrement = bulletFrequencyIncrement;
 
+            //bulletComponent.SetBulletColor(bulletColor);
             // Setup the point at which bullets need to be placed based on all the parameters
-            var initialPosition = gunPoint.position + (gunPoint.transform.forward * (bulletSpacingInitial - i * bulletSpacingIncrement));
+            var initialPosition = gunPoint.point.transform.position + (gunPoint.point.forward * (bulletSpacingInitial - i * bulletSpacingIncrement));
             var bulletPosition = new Vector3(initialPosition.x + offsetX + Random.Range(0f, 1f) * bulletRandomness - bulletRandomness / 2,
                 initialPosition.y + offsetY + Random.Range(0f, 1f) * bulletRandomness - bulletRandomness / 2, initialPosition.z);
 
             bullet.transform.position = bulletPosition;
-
-            // bulletComponent.BulletXPosition = bullet.transform.position.x;
-            // bulletComponent.BulletYPosition = bullet.transform.position.y;
+            bulletComponent.gunPoint = gunPoint;
+            
             bulletComponent.SetBulletPosition(bullet.transform.position.x, bullet.transform.position.y);
 
             // Initial chance to ricochet as the bullet comes out. If the bullet bounces again, this will be determined on the next bullet collision.
@@ -895,7 +901,8 @@ public class WeaponSystem2 : MonoBehaviour
         // }
 
         // Set the weapon offset position - the gunpoint transform needs to be a child of the player gameobject's transform, if in "relative to object" mode.
-        gunPoint.transform.localPosition = new Vector3(weaponXOffset, weaponYOffset, gunPoint.transform.localPosition.z);
+        gunPoint.point.localPosition = new Vector3(weaponXOffset, weaponYOffset, gunPoint.point.transform.localPosition.z);
+        gunPoint.AimAngle =  aimAngle ;
     }
 
     /// <summary>

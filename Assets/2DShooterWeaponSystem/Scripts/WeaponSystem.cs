@@ -1007,7 +1007,8 @@ public class WeaponSystem : MonoBehaviour
 
             var bullet = GetBulletFromPool();
             var bulletComponent = (Bullet)bullet.GetComponent(typeof(Bullet));
-
+            bulletComponent.Init();
+            
             var offsetX = Mathf.Cos(aimAngle - Mathf.PI / 2) * (bulletSpacingInitial - i * bulletSpacingIncrement);
             var offsetY = Mathf.Sin(aimAngle - Mathf.PI / 2) * (bulletSpacingInitial - i * bulletSpacingIncrement);
 
