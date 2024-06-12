@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7549411667726164285}
   - component: {fileID: 812824248476637370}
   m_Layer: 8
-  m_Name: BulletLaserPrefab
+  m_Name: BulletFlashPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

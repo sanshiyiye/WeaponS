@@ -50,7 +50,7 @@ MonoBehaviour:
   trackingTurnRate: 0
   lerpTurnRate: 0
   circularFireRotationRate: 0
-  circularFireMode: 1
+  circularFireMode: 0
   targetToTrack: {fileID: 0}
   reloadSfxClip: {fileID: 0}
   emptySfxClip: {fileID: 0}

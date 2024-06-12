@@ -140,12 +140,10 @@ public class Bullet : MonoBehaviour {
 
     protected bool isAlive;
     
-    // Use this for initialization
-    // protected virtual void Start()
-    // {
-        // Cache the sprite renderer on start when bullets are initially created and pooled for better performance
-        // bulletSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-    // }
+    // circle fire mode
+    public float bulletCircleRadius;
+
+    public float bulletCircleWidth;
 
     public virtual void Init()
     {

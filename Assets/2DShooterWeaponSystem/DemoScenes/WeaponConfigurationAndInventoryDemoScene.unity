@@ -2897,6 +2897,7 @@ MonoBehaviour:
   bulletSpeed: 0
   bulletAmplitude: 0
   bulletCircleRadius: 0
+  bulletCircleWidth: 0
   bulletFrequencyIncrement: 0
   weaponFireRate: 0
   weaponXOffset: 0
@@ -26662,6 +26663,8 @@ MonoBehaviour:
   sineX: 0
   sineY: 0
   circularFireMode: 0
+  bulletCircleRadius: 0
+  bulletCircleWidth: 0
 --- !u!1 &2123168580980230481
 GameObject:
   m_ObjectHideFlags: 0

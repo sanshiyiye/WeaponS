@@ -72,6 +72,9 @@ public class WeaponSystem2 : MonoBehaviour
 
     [Range(1,50f)]
     public float bulletCircleRadius;
+
+    [Range(1f, 10f)] 
+    public float bulletCircleWidth;
     
     /// <summary>
     /// Bullet frequency increment. Added each frame when bulletAmplitude is used.
@@ -487,6 +490,7 @@ public class WeaponSystem2 : MonoBehaviour
         // circle
         bulletCircleRadius = config.BulletCircleRadius;
         
+        bulletCircleWidth = config.BulletCircleWidth;
         
         bulletFrequencyIncrement = config.BulletFrequencyIncrement;
         bulletSpread = config.BulletSpread;
@@ -716,6 +720,11 @@ public class WeaponSystem2 : MonoBehaviour
 
             var bullet = GetBulletFromPool();
             var bulletComponent = (Bullet)bullet.GetComponent(typeof(Bullet));
+            
+            bulletComponent.circularFireMode = circularFireMode;
+            bulletComponent.bulletCircleRadius = bulletCircleRadius;
+            bulletComponent.bulletCircleWidth = bulletCircleWidth;
+            
             bulletComponent.Init();
             
             var offsetX = Mathf.Cos(aimAngle - Mathf.PI / 2) * (bulletSpacingInitial - i * bulletSpacingIncrement);
@@ -732,7 +741,6 @@ public class WeaponSystem2 : MonoBehaviour
             // }
 
             bulletComponent.speed = bulletSpeed;
-            bulletComponent.circularFireMode = circularFireMode;
             bulletComponent.amplitude = bulletAmplitude;
             bulletComponent.frequencyIncrement = bulletFrequencyIncrement;
 

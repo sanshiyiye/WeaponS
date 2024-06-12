@@ -164,6 +164,20 @@ public class WeaponSystemConfig : ScriptableObject
             bulletCircleRadius = value;
         }
     }
+
+    [SerializeField] 
+    private float bulletCircleWidth;
+    public float BulletCircleWidth
+    {
+        get
+        {
+            return bulletCircleWidth;
+        }
+        set
+        {
+            bulletCircleWidth = value;
+        }
+    }
     
     [SerializeField]
     private float bulletFrequencyIncrement;
