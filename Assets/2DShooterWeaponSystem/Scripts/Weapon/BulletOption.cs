@@ -12,5 +12,6 @@ public enum BulletOption
       Beam4,
       Beam5,
       Beam6,
-      Laser
+      Laser,
+      Flash
 }

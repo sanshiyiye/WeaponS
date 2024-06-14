@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Laser : Bullet
+public class Flash : Bullet
 {
     
     private Transform startParticles;
@@ -14,40 +13,6 @@ public class Laser : Bullet
     
     public override void Init()
     {
-        bulletSpriteRenderer = GetComponent<LineRenderer>();
-
-        // if (circularFireMode)
-        // {
-        //     startParticles = transform.Find("StartParticles");
-        //     startParticles.gameObject.SetActive(true);
-        //     var startParticleSystem = startParticles.GetComponentsInChildren<ParticleSystem>();
-        //     for (int i = 0; i < startParticleSystem.Length; i++)
-        //     {
-        //         startParticleSystem[i].Play();
-        //     
-        //     }
-        // }
-        // else
-        {
-            startParticles = transform.Find("StartParticles");
-            startParticles.gameObject.SetActive(true);
-            var startParticleSystem = startParticles.GetComponentsInChildren<ParticleSystem>();
-            for (int i = 0; i < startParticleSystem.Length; i++)
-            {
-                startParticleSystem[i].Play();
-            
-            }
-            endParticles = transform.Find("EndParticles");
-            endParticles.gameObject.SetActive(true);
-            var endParticleSystem = endParticles.GetComponentsInChildren<ParticleSystem>();
-            for (int i = 0; i < endParticleSystem.Length; i++)
-            {
-                endParticleSystem[i].Play();
-
-            }
-        }
-        
-        
         
         isAlive = true;
         
@@ -60,63 +25,27 @@ public class Laser : Bullet
             bulletCircleRadius = 5f;
             bulletCircleWidth = 0.5f;
             segmentAmount = CalcSegmentAmount(360, bulletCircleWidth, bulletCircleRadius);
-            linePos = new Vector2[PointAmount];
+            linePos = new Vector3[PointAmount];
             
 
         }
         else
         {
-            segmentAmount = 1;
-            linePos = new Vector2[2];
+            segmentAmount = 19;
+            linePos = new Vector3[20];
         }
         
+        bulletSpriteRenderer = GetComponent<LineRenderer>();
         var lineRenderer = ((LineRenderer)bulletSpriteRenderer);
         lineRenderer.positionCount = PointAmount;
         lineRenderer.startWidth = 1.0f;
         lineRenderer.endWidth = 1.0f;
 
-        hasCollision = false;
-
-        contactFilter = new ContactFilter2D();
-        contactFilter.useTriggers = false; // 不包括触发器
-        contactFilter.SetLayerMask(LayerMask.GetMask("Default")); 
-    }
-
-    private ContactFilter2D contactFilter;
-    
-    public override float BulletXPosition
-    {
-        get
-        {
-            // 自定义get逻辑
-            return base.bulletXPosition ;
-        }
-        set
-        {
-            // 自定义set逻辑
-            base.bulletXPosition = value;
-            
-        }
-    }
-
-    public override float BulletYPosition
-    {
-        get
-        {
-            // 自定义get逻辑
-            return base.bulletYPosition ;
-        }
-        set
-        {
-            // 自定义set逻辑
-            base.bulletYPosition = value;
-            
-        }
-        
     }
     
     
-    private Vector2 [] linePos ;
+    
+    public Vector3 [] linePos ;
 
     public int segmentAmount = 100;
     private int PointAmount { get { return segmentAmount + 1; } }
@@ -142,12 +71,12 @@ public class Laser : Bullet
 
         }
         UpdateShootingPos();
-        UpdateParticlesPos();
-        UpdateEdgeCollider();
+        // UpdateParticlesPos();
+        // UpdateEdgeCollider();
     }
     
     // 根据起始角度、弧度、弧半径、构成弧的各点的数量，算得各点的位置
-    void SetCirclePointsPos(ref Vector2[] posArray, out Vector2 startPos, Vector2 center,
+    void SetCirclePointsPos(ref Vector3[] posArray, out Vector2 startPos, Vector2 center,
         float startAngle, float angleSum, float radius, int pointAmount)
     {
         // Vector2[] posArray = new Vector2[pointAmount];
@@ -183,15 +112,23 @@ public class Laser : Bullet
         return amount;
     }
     // 用linerenderer画弧,用EdgeCollider2D构建碰撞体
-    void SetLinePointsPos(ref Vector2[] linePos,Vector3 gunPosition, float directionAngle, float length)
+    void SetLinePointsPos(ref Vector3[] linePos,Vector3 gunPosition, float directionAngle, float length)
     {
         // linePos[0] = Vector2.zero;
         linePos[0].x = gunPosition.x;
         linePos[0].y = gunPosition.y;
+        linePos[0].z = gunPosition.z;
             
         // linePos[1] = Vector2.zero;
-        linePos[1].x = linePos[0].x + Mathf.Cos(directionAngle) * speed ;
-        linePos[1].y = linePos[0].y + Mathf.Sin(directionAngle) * speed;
+        linePos[^1].x = linePos[0].x + Mathf.Cos(directionAngle) * length ;
+        linePos[^1].y = linePos[0].y + Mathf.Sin(directionAngle) * length;
+        
+        int lineSize = linePos.Length;
+        for(int i=1; i < lineSize-1; i++)
+        {
+            linePos[i] = (Vector3.Lerp(linePos[0], linePos[^1], (float)i / lineSize));
+        }
+        
     }
     
     void UpdateEdgeCollider()
@@ -216,10 +153,6 @@ public class Laser : Bullet
         ((EdgeCollider2D)edge).points = edgeColliderPoints;
     }
     
-    public void SetEnable(bool b)
-    {
-        bulletSpriteRenderer.enabled = b;
-    }
 
     public void UpdateShootingPos()
     {
@@ -266,56 +199,27 @@ public class Laser : Bullet
     }
     
     private Vector3? collisionPoint;
-
-    private bool hasCollision;
-    
-    // void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     // 如果发生碰撞，存储碰撞点信息
-    //
-    //     // 获取碰撞信息
-    //     ContactPoint2D[] contacts = new ContactPoint2D[10]; // 假设最多有10个接触点
-    //     int contactCount = edge.GetContacts(contacts);
-    //     if(contactCount > 0) hasCollision = true;
-    //     for (int i = 0; i < contactCount; i++)
-    //     {
-    //         // contacts[i] 是一个ContactPoint2D结构，包含了碰撞点和法线信息
-    //         Vector2 point = contacts[i].point; // 碰撞点的世界坐标
-    //
-    //         collisionPoint = point;
-    //     }
-    // }
     
     void OnCollisionEnter2D(Collision2D collision)
     {
-        hasCollision = true;
         foreach (ContactPoint2D contact in collision.contacts)
         {
             collisionPoint = contact.point;
         }
-
     }
-    private ContactPoint2D[] contacts = new ContactPoint2D[10];
-   
-    private Collider2D[] results = new Collider2D[10];
+
+    private float fps = 0;
+
+    public float _Speed = 2;
     
+    private float sineRandom;
     void Update()
     {
         if (!isAlive) return;
         // Debug.DrawRay(startPos, 100 * directionAngle * Vector3.one, Color.red );
         if (gunPoint == null) return;
-
         
-        // int contactCount = Physics2D.GetContacts(edge, contacts);
-        // if (contactCount > 0)
-        // {
-        //     Debug.Log("---");
-        // }
-        int count = Physics2D.OverlapCollider(edge,contactFilter, results);
-        if (count > 0)
-        {
-            Debug.Log("---");
-        }
+        
         if (circularFireMode)
         {
             SetCirclePointsPos(ref linePos,out startPos ,gunPoint.point.transform.position,startAngle,angleSum, bulletCircleRadius, PointAmount);
@@ -325,30 +229,110 @@ public class Laser : Bullet
         {
 
             var directionAngle = gunPoint.AimAngle+ bulletSpreadAngle;
-            SetLinePointsPos(ref linePos,gunPoint.point.transform.position,directionAngle,speed);
             
-            RaycastHit2D hit = Physics2D.Raycast(linePos[0], (linePos[1]-linePos[0]), speed, 15);
-           
-            if (hit.collider != null)
+            fps += Time.deltaTime*_Speed;
+            if (fps >= 1)
             {
-                linePos[1] = hit.point;
-            }    
-            // if (hasCollision && collisionPoint != null)
-            // {
-            //     // Debug.Log("Using collision point: " + collisionPoint);
-            //     linePos[1] = (Vector2)collisionPoint;
-            // }
-            // ((LineRenderer)bulletSpriteRenderer).SetPosition(1, endPos);
+                sineRandom = (float)Random.Range(0, linePos.Length * 10) / 10;
+                fps = 0;
+            }
+
+            for (int i = 0; i < linePos.Length; i++)
+            {
+                Vector2 point = linePos[i];
+                Vector3 v = Vector3.zero;
+
+                if (useArc)
+                {
+                    // if (i != 0 && i != linePos.Length - 1)
+                    {
+                        if (X) v.x = Arcing(i);
+                        if (Y) v.y = Arcing(i);
+                        if (Z) v.z = Arcing(i);
+                        point = Vector3.Lerp(linePos[i], linePos[i] + v, fps);
+                    }
+                   
+                }
+
+                if (useSine)
+                {
+                    v = Vector3.zero;
+                    if (i != 0 && i != linePos.Length - 1)
+                    {
+                        if (X) v.x = Sine(i + sineRandom);
+                        if (Y) v.y = Sine(i + sineRandom);
+                        if (Z) v.z = Sine(i + sineRandom);
+                        point += (Vector2)v;
+
+                    }
+                }
+
+                if (useWiggle)
+                {
+                    if (i != 0 && i != linePos.Length - 1)
+                    {
+                        point += (Vector2)Wiggle(i);
+
+                    }
+                }
+                
+                ((LineRenderer)bulletSpriteRenderer).SetPosition(i, point);
+    
+                
+            }
+            
+            
             transform.position = linePos[0];
             transform.eulerAngles = new Vector3(0.0f, 0.0f,  directionAngle * Mathf.Rad2Deg);
 
         }
 
 
-        UpdateShootingPos();
-        UpdateParticlesPos();
-        UpdateEdgeCollider();
+        // UpdateShootingPos();
+        // UpdateParticlesPos();
+        // UpdateEdgeCollider();
        
-        //Debug.DrawRay(gunPoint.point.position,10*(endPos-startPos),Color.red);
+    }
+
+    public float _ArcingPowParam1 = 0.28f;
+
+
+    public float _Adjust = 2;
+    
+    public bool X = true;
+    public bool Y = true;
+    public bool Z = true;
+    
+    // 这个值等于 frequencyIncrement 
+    public float _SineScaleX = 1;
+    
+    // 这个值等于 amplitude
+    public float _SineScaleY = 1;
+    public float _RandomSize = 0.1f;
+
+    public bool useArc;
+
+    public bool useSine;
+
+    public bool useWiggle;
+    
+    float Arcing(float param)
+    {
+        return _ArcingPowParam1 * Mathf.Pow((param - (float)linePos.Length / 2 ),2) + _Adjust;
+    }
+ 
+ 
+    float Sine(float param)
+    {
+        return Mathf.Sin((float)param / linePos.Length * 2 * 3.14f * _SineScaleX) * _SineScaleY;
+    }
+ 
+    Vector3 Wiggle(int listIndex)
+    {
+        Vector3 v = new Vector3();
+        if (X) v.x = Random.Range(0, 10) * _RandomSize;
+        if (Y) v.y = Random.Range(0, 10) * _RandomSize;
+        if (Z) v.z = Random.Range(0, 10) * _RandomSize;
+        return v;
     }
 }

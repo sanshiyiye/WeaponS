@@ -848,6 +848,9 @@ public class WeaponSystem2 : MonoBehaviour
             case BulletOption.Laser:
                 bullet = ObjectPoolManager.instance.GetUsableLaserBullet();
                 break;
+            case BulletOption.Flash:
+                bullet = ObjectPoolManager.instance.GetUsableFlashBullet();
+                break;
             default:
                 bullet = ObjectPoolManager.instance.GetUsableSphereBullet();
                 break;

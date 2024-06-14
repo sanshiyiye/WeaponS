@@ -2917,7 +2917,7 @@ MonoBehaviour:
   shooterDirectionType: 0
   _weaponConfigs:
   - {fileID: 11400000, guid: 429b0ccbe913b784783a0976fe28d284, type: 2}
-  - {fileID: 11400000, guid: ea1e5670975e21840800acda331aa823, type: 2}
+  - {fileID: 11400000, guid: 7a944615574e3624eb3745a88d7c1156, type: 2}
   - {fileID: 11400000, guid: bc11af65def63bb45a8db475d8d93441, type: 2}
   - {fileID: 11400000, guid: 59650adbd4765ac4fa718031319922e2, type: 2}
   weaponConfig: {fileID: 11400000, guid: fecd7ac7e06edf8498b3dd747d4301bb, type: 2}
@@ -5088,6 +5088,8 @@ MonoBehaviour:
   beam6Prefab: {fileID: 0}
   laserPrefab: {fileID: 1000014001245468, guid: c49a4556dbe084e45bac007ec55a634a,
     type: 3}
+  flashPrefab: {fileID: 1000014001245468, guid: 228aff54080a69e469c8df8c78abc928,
+    type: 3}
   numStandardHorizonalBulletsToSpawn: 500
   numSphereBulletsToSpawn: 350
   numSparksToSpawn: 350
@@ -5100,6 +5102,7 @@ MonoBehaviour:
   numBeam5BulletsToSpawn: 0
   numBeam6BulletsToSpawn: 0
   numLaserBullet2ToSpawn: 0
+  numFlashBulletsToSpawn: 0
   tagAsTurretBullets: 0
   pooledObjectFolderName: InitialPooledObjects
 --- !u!4 &384870659
@@ -16501,7 +16504,6 @@ GameObject:
   - component: {fileID: 1302816110}
   - component: {fileID: 1302816109}
   - component: {fileID: 1302816108}
-  - component: {fileID: 1302816107}
   m_Layer: 14
   m_Name: Crate
   m_TagString: Obj
@@ -16509,27 +16511,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &1302816107
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1302816106}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 1.0485761
-  m_LinearDrag: 3
-  m_AngularDrag: 3
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &1302816108
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -11,17 +11,28 @@ public class ObjectPoolManager : MonoBehaviour {
 
     public GameObject standardHorizonalBulletPrefab, sphereBulletPrefab, sparkPrefab, 
         bloodPrefab, beam1Prefab, beam2Prefab, beam3Prefab, 
-        beam4Prefab, beam5Prefab, beam6Prefab, laserPrefab;
+        beam4Prefab, beam5Prefab, beam6Prefab, laserPrefab,
+        flashPrefab;
 
     public int numStandardHorizonalBulletsToSpawn, numSphereBulletsToSpawn,
         numSparksToSpawn, numBloodParticleToSpawn, numTurretBulletsToSpawn,
         numBeam1BulletsToSpawn, numBeam2BulletsToSpawn, numBeam3BulletsToSpawn,
         numBeam4BulletsToSpawn, numBeam5BulletsToSpawn, numBeam6BulletsToSpawn,
-        numLaserBullet2ToSpawn;
+        numLaserBullet2ToSpawn, numFlashBulletsToSpawn;
 
-    public static List<GameObject> standardHorizontalBulletObjectPool, sphereBulletObjectPool,
-        sparkObjectPool, bloodObjectPool, turretBulletObjectPool,
-        beam1Pool, beam2Pool, beam3Pool, beam4Pool, beam5Pool, beam6Pool,laserPool;
+    public static List<GameObject> standardHorizontalBulletObjectPool,
+        sphereBulletObjectPool,
+        sparkObjectPool,
+        bloodObjectPool,
+        turretBulletObjectPool,
+        beam1Pool,
+        beam2Pool,
+        beam3Pool,
+        beam4Pool,
+        beam5Pool,
+        beam6Pool,
+        laserPool,
+        flashPool;
 
     /// <summary>
     /// Only really used for demo scenes - bullets can be made to use the layer for turret bullets, this is so that the demo scene player can have his/her own bullets that apply damage to the turrets, and the turrets can have their own bullets.
@@ -206,6 +217,18 @@ public class ObjectPoolManager : MonoBehaviour {
             laserBullet.SetActive(false);
             laserPool.Add(laserBullet);
         }
+
+        flashPool = new List<GameObject>();
+        for (var i = 1; i <= numFlashBulletsToSpawn; i++)
+        {
+            var laserBullet = (GameObject)Instantiate(flashPrefab);
+
+            SetParentTransform(laserBullet);
+
+            laserBullet.SetActive(false);
+            laserPool.Add(laserBullet);
+        }
+        
     }
 
     private void SetParentTransform(GameObject gameObjectRef)
@@ -469,5 +492,24 @@ public class ObjectPoolManager : MonoBehaviour {
         beam4Pool.Add(laserBullet);
         
         return laserBullet;
+    }
+
+    public GameObject GetUsableFlashBullet()
+    {
+        GameObject obj = GetDisabledPoolObject(flashPool);
+
+        if (obj != null)
+        {
+            return obj;
+        }
+
+        var flashBullet = (GameObject)Instantiate(instance.flashPrefab);
+
+        SetParentTransform(flashBullet);
+
+        flashBullet.SetActive(false);
+        beam4Pool.Add(flashBullet);
+        
+        return flashBullet;
     }
 }
